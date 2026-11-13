@@ -25,8 +25,22 @@ QUERY = '''query($login:String!){user(login:$login){createdAt followers{totalCou
   contributionCalendar{totalContributions weeks{contributionDays{date contributionCount}}}}}}'''
 
 
+def github_token():
+    """GITHUB_TOKEN dari Actions; di komputer sendiri diambil dari git credential manager."""
+    if os.environ.get('GITHUB_TOKEN'):
+        return os.environ['GITHUB_TOKEN']
+    import subprocess
+    out = subprocess.run(['git', 'credential', 'fill'], input='protocol=https\nhost=github.com\n\n',
+                         capture_output=True, text=True).stdout
+    token = dict(l.split('=', 1) for l in out.splitlines() if '=' in l).get('password')
+    if not token:
+        sys.exit('Token GitHub tidak ditemukan. Login GitHub dulu di komputer ini.')
+    os.environ['GITHUB_TOKEN'] = token
+    return token
+
+
 def fetch():
-    token = os.environ['GITHUB_TOKEN']
+    token = github_token()
     body = json.dumps({'query': QUERY, 'variables': {'login': USER}}).encode()
     req = urllib.request.Request('https://api.github.com/graphql', data=body,
                                  headers={'Authorization': 'bearer ' + token, 'User-Agent': USER + '-profile'})
