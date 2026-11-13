@@ -1,0 +1,3 @@
+*.cmd linguist-vendored
+.github/** linguist-vendored
+*.svg linguist-generated
