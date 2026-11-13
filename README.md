@@ -63,4 +63,4 @@ motto: "Gabut? Bikin sesuatu."
 
 <p align="center"><img src="assets/divider.svg" alt="" width="100%" /></p>
 
-<p align="center"><sub>Kartu statistik dan ular diperbarui otomatis tiap 6 jam · huruf judul: Bangers (SIL OFL)</sub></p>
+<p align="center"><sub>Huruf judul: Bangers (SIL OFL) · ular kontribusi: Platane/snk</sub></p>
